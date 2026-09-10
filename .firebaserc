@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "nossas-lembrancas-d46a2"
-  }
+  },
+  "targets": {
+    "nossas-lembrancas-d46a2": {
+      "hosting": {
+        "beatryzematheus": [
+          "beatryzematheus"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

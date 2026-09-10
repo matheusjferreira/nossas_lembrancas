@@ -23,6 +23,7 @@
     }
   },
   "hosting": {
+    "target": "beatryzematheus",
     "public": "build/web",
     "ignore": [
       "firebase.json",
