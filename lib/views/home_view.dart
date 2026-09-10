@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'galeria_view.dart';
 import 'enviar_recado_view.dart';
 import 'enviar_foto_view.dart';
@@ -8,39 +9,57 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tamanhoTela = MediaQuery.of(context).size;
+    // Logo responsivo: menor em telas pequenas
+    final tamanhoLogo = tamanhoTela.width < 400 ? 160.0 : 220.0;
+
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
-            child: Padding(
-              padding: const EdgeInsets.all(32),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('💍', style: TextStyle(fontSize: 64)),
-                  const SizedBox(height: 16),
+                  // Logo BM
+                  SvgPicture.asset(
+                    'assets/BM_logo.svg',
+                    width: tamanhoLogo,
+                    height: tamanhoLogo,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Ícone de aliança
+                  const Text('💍', style: TextStyle(fontSize: 40)),
+                  const SizedBox(height: 12),
+
+                  // Título
                   const Text(
                     'Nossas Lembranças',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 28,
                       fontWeight: FontWeight.w300,
                       color: Color(0xFF5D4E37),
                       letterSpacing: 1.5,
                     ),
                   ),
                   const SizedBox(height: 12),
+
+                  // Subtítulo
                   const Text(
                     'Compartilhe com a gente os momentos\nespeciais deste dia 💛',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       color: Color(0xFF8A7B65),
                       height: 1.5,
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 40),
 
                   // Botão: Compartilhar foto
                   SizedBox(
@@ -56,7 +75,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
 
                   // Botão: Deixar recado
                   SizedBox(
@@ -72,7 +91,7 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
 
                   // Botão: Galeria
                   SizedBox(
