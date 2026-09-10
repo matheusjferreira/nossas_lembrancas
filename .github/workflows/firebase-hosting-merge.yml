@@ -19,3 +19,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NOSSAS_LEMBRANCAS_D46A2 }}'
           projectId: nossas-lembrancas-d46a2
           target: beatryzematheus
+          channelId: live
