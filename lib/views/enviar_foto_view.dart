@@ -59,16 +59,16 @@ class _EnviarFotoViewState extends State<EnviarFotoView> {
     final vm = context.read<AppViewModel>();
     final ok = await vm.enviarFoto(
       nome: nome,
-      mensagem: legenda,
+      legenda: legenda,
       bytes: _fotoBytes!,
       extensao: _extensao ?? 'jpg',
     );
 
     if (!mounted) return;
     if (ok) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Foto enviada! Obrigado 💛')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(vm.sucesso ?? 'Enviado!')));
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(
@@ -79,8 +79,7 @@ class _EnviarFotoViewState extends State<EnviarFotoView> {
 
   @override
   Widget build(BuildContext context) {
-    final enviando = context.watch<AppViewModel>().enviando;
-
+    final enviando = context.watch<AppViewModel>().enviandoFoto;
     return Scaffold(
       appBar: AppBar(title: const Text('Foto da festa')),
       body: Center(

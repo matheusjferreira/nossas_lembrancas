@@ -38,13 +38,13 @@ class _EnviarRecadoViewState extends State<EnviarRecadoView> {
     }
 
     final vm = context.read<AppViewModel>();
-    final ok = await vm.enviarTexto(nome: nome, mensagem: msg);
+    final ok = await vm.enviarRecado(nome: nome, mensagem: msg);
 
     if (!mounted) return;
     if (ok) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Recado enviado! Obrigado 💛')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(vm.sucesso ?? 'Enviado!')));
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(
@@ -55,7 +55,7 @@ class _EnviarRecadoViewState extends State<EnviarRecadoView> {
 
   @override
   Widget build(BuildContext context) {
-    final enviando = context.watch<AppViewModel>().enviando;
+    final enviando = context.watch<AppViewModel>().enviandoRecado;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Recado aos noivos')),

@@ -2,15 +2,16 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../models/recado.dart';
+import '../models/foto.dart';
 
 class FirebaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  // Enviar foto
+  // ============ FOTOS ============
   Future<void> enviarFoto({
     required String nome,
-    required String mensagem,
+    required String legenda,
     required Uint8List bytes,
     required String extensao,
   }) async {
@@ -18,36 +19,39 @@ class FirebaseService {
     final path = 'fotos/${timestamp}_$nome.$extensao';
     final ref = _storage.ref().child(path);
 
-    // Define o contentType explicitamente
     final metadata = SettableMetadata(contentType: 'image/$extensao');
 
     await ref.putData(bytes, metadata);
     final url = await ref.getDownloadURL();
 
-    await _db.collection('recados').add({
-      'tipo': 'foto',
+    await _db.collection('fotos').add({
       'nome': nome,
-      'mensagem': mensagem,
+      'legenda': legenda,
       'fotoUrl': url,
       'criadoEm': FieldValue.serverTimestamp(),
     });
   }
 
-  // Enviar texto
-  Future<void> enviarTexto({
+  Stream<List<Foto>> streamFotos() {
+    return _db
+        .collection('fotos')
+        .orderBy('criadoEm', descending: true)
+        .snapshots()
+        .map((snap) => snap.docs.map((d) => Foto.fromDoc(d)).toList());
+  }
+
+  // ============ RECADOS ============
+  Future<void> enviarRecado({
     required String nome,
     required String mensagem,
   }) async {
     await _db.collection('recados').add({
-      'tipo': 'texto',
       'nome': nome,
       'mensagem': mensagem,
-      'fotoUrl': null,
       'criadoEm': FieldValue.serverTimestamp(),
     });
   }
 
-  // Stream de recados ordenados do mais recente
   Stream<List<Recado>> streamRecados() {
     return _db
         .collection('recados')

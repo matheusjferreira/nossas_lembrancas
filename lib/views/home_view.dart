@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'galeria_view.dart';
 import 'enviar_recado_view.dart';
 import 'enviar_foto_view.dart';
+import 'mural_recados_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -10,7 +11,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tamanhoTela = MediaQuery.of(context).size;
-    // Logo responsivo: menor em telas pequenas
     final tamanhoLogo = tamanhoTela.width < 400 ? 160.0 : 220.0;
 
     return Scaffold(
@@ -23,6 +23,12 @@ class HomeView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Mesagem bíblica
+                  const Text(
+                    '"Para que todos vejam, e saibam, e considerem, e juntamente entendam que a mão do Senhor fez isto..." — Isaías 41:20',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
                   // Logo BM
                   SvgPicture.asset(
                     'assets/BM_logo.svg',
@@ -31,14 +37,9 @@ class HomeView extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 12),
-
-                  // Ícone de aliança
-                  const Text('💍', style: TextStyle(fontSize: 40)),
-                  const SizedBox(height: 12),
-
                   // Título
                   const Text(
-                    'Nossas Lembranças',
+                    'Nossas Lembranças 💍',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 28,
@@ -93,12 +94,12 @@ class HomeView extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Botão: Galeria
+                  // Botão: Galeria de fotos
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton.icon(
                       icon: const Icon(Icons.photo_library_outlined),
-                      label: const Text('Ver a galeria'),
+                      label: const Text('Ver galeria de fotos'),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: const Color(0xFF5D4E37),
                         padding: const EdgeInsets.symmetric(vertical: 16),
@@ -110,6 +111,30 @@ class HomeView extends StatelessWidget {
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const GaleriaView()),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Botão: Mural de recados
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.mail_outline),
+                      label: const Text('Ver mural de recados'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFF5D4E37),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        side: const BorderSide(color: Color(0xFFD9CDB8)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MuralRecadosView(),
+                        ),
                       ),
                     ),
                   ),

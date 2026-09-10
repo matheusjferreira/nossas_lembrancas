@@ -1,24 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Recado {
+class Foto {
   final String id;
   final String nome;
-  final String mensagem;
+  final String legenda;
+  final String fotoUrl;
   final DateTime criadoEm;
 
-  Recado({
+  Foto({
     required this.id,
     required this.nome,
-    required this.mensagem,
+    required this.legenda,
+    required this.fotoUrl,
     required this.criadoEm,
   });
 
-  factory Recado.fromDoc(DocumentSnapshot doc) {
+  factory Foto.fromDoc(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
-    return Recado(
+    return Foto(
       id: doc.id,
       nome: data['nome'] ?? '',
-      mensagem: data['mensagem'] ?? '',
+      legenda: data['legenda'] ?? '',
+      fotoUrl: data['fotoUrl'] ?? '',
       criadoEm: (data['criadoEm'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
