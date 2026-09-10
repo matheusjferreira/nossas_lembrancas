@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:mofilo_content_filter/mofilo_content_filter.dart';
 import '../models/recado.dart';
 import '../models/foto.dart';
 import '../services/firebase_service.dart';
@@ -26,6 +27,13 @@ class AppViewModel extends ChangeNotifier {
     required Uint8List bytes,
     required String extensao,
   }) async {
+    if (ContentFilter.check(nome).isBlocked ||
+        ContentFilter.check(legenda).isBlocked) {
+      _erro = 'Ops, sua foto contém palavras que não podemos aceitar 💛';
+      notifyListeners();
+      return false;
+    }
+
     return _executar(
       tipo: 'foto',
       acao: () => _service.enviarFoto(
@@ -41,6 +49,13 @@ class AppViewModel extends ChangeNotifier {
     required String nome,
     required String mensagem,
   }) async {
+    if (ContentFilter.check(nome).isBlocked ||
+        ContentFilter.check(mensagem).isBlocked) {
+      _erro = 'Ops, seu recado contém palavras que não podemos aceitar 💛';
+      notifyListeners();
+      return false;
+    }
+
     return _executar(
       tipo: 'recado',
       acao: () => _service.enviarRecado(nome: nome, mensagem: mensagem),

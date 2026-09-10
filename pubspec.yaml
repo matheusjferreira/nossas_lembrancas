@@ -39,6 +39,7 @@ dependencies:
   firebase_storage: ^12.3.0
   flutter_svg: ^2.0.10
   image_picker: ^1.1.2
+  mofilo_content_filter: ^1.0.8
   provider: ^6.1.1
 
 dev_dependencies:
